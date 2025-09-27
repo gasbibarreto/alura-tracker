@@ -1,5 +1,5 @@
 <template>
-  <main class="columns is-gapless is-multiline" :class="{ 'modo-escuro': modoEscuroAtivo }">
+  <main class="columns is-gapless is-multiline conteudo" :class="{ 'modo-escuro': modoEscuroAtivo }">
     <div class="column is-one-quarter">
       <BarraLateral @aoTemaAlterado="trocarTema"/>
     </div>
