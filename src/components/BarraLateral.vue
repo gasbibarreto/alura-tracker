@@ -8,7 +8,7 @@
     </button>
 
     <nav class="panel mt-5">
-      <li  class="link">
+      <li class="link">
         <router-link to="/">
           Tarefas
         </router-link>

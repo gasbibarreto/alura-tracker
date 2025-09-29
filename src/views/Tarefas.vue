@@ -1,6 +1,5 @@
 
 <template>
-
       <div class="column is-three-quarter">
         <Formulario @aoSalvarTarefa="salvarTarefa"/>
         <div class="lista">

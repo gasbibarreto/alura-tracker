@@ -1,23 +1,25 @@
 <script lang="ts">
-import IProjeto from '@/interfaces/IProjeto'
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { useStore } from '@/store';
 
 export default defineComponent({
   name: 'Projetos',
   data( ) {
     return {
       nomeDoProjeto: "",
-      projetos: [ ] as IProjeto[]
     }
   },
   methods: {
     salvarProjeto() {
-      const projeto: IProjeto = {
-        nome: this.nomeDoProjeto,
-        id: new Date().toISOString( )
-      }
-      this.projetos.push(projeto)
+      this.store.commit('ADICIONA_PROJETO', this.nomeDoProjeto)
       this.nomeDoProjeto = ""
+    }
+  },
+  setup() {
+    const store = useStore()
+    return {
+      store,
+      projetos: computed(() => store.state.projetos) 
     }
   }
 })
@@ -37,13 +39,13 @@ export default defineComponent({
     </div>
   </form>
   <table class="table is-fullwidth">
-    <thead>
-      <tr>
-        <th>
+    <thead class="thead">
+      <tr class="tr has-background-light">
+        <th class="th is-narrow">
           ID
         </th>
-        <th>
-         Nome
+        <th class="th is-narrow"> 
+          Nome
         </th>
       </tr>
     </thead>
@@ -51,7 +53,6 @@ export default defineComponent({
       <tr v-for="projeto in projetos" :key="projeto.id">
         <td>{{ projeto.id }}</td>
         <td>{{ projeto.nome }}</td>
-
       </tr>
     </tbody>
   </table>
@@ -63,6 +64,6 @@ export default defineComponent({
 
 <style scoped>
 .projetos {
-  padding: 20px;
+  padding: 1.25rem;
 }
 </style>
