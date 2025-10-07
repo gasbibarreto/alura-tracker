@@ -1,15 +1,20 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { useStore } from '@/store';
+import { EXCLUIR_PROJETO } from '@/store/tipo-mutacoes';
 
 export default defineComponent({
   name: 'Projetos',
   methods: {
+    excluir(id: string) {
+      this.store.commit(EXCLUIR_PROJETO, id)
+    }
   },
   setup() {
     const store = useStore()
     return {
-      projetos: computed(() => store.state.projetos) 
+      projetos: computed(() => store.state.projetos) ,
+      store
     }
   }
 })
@@ -49,7 +54,11 @@ export default defineComponent({
               <i class="fas fa-pencil-alt"></i>
             </span>
           </router-link>
+           <button @click="excluir(projeto.id)">
+
+        </button>
         </td>
+       
       </tr>
     </tbody>
   </table>
