@@ -4,21 +4,11 @@ import { useStore } from '@/store';
 
 export default defineComponent({
   name: 'Projetos',
-  data( ) {
-    return {
-      nomeDoProjeto: "",
-    }
-  },
   methods: {
-    salvarProjeto() {
-      this.store.commit('ADICIONA_PROJETO', this.nomeDoProjeto)
-      this.nomeDoProjeto = ""
-    }
   },
   setup() {
     const store = useStore()
     return {
-      store,
       projetos: computed(() => store.state.projetos) 
     }
   }
@@ -29,15 +19,12 @@ export default defineComponent({
   <section class="projetos">
     <div class="title">
     <h1>Projetos</h1>
-    <form @submit.prevent="salvarProjeto">
-      <div class="field">
-        <label form="nomeDoProjeto" class="label">Nome do projeto</label>
-        <input type="text" class="input" v-model="nomeDoProjeto" id="nomeDoProjeto" />
-      </div>
-      <div class="field">
-      <button class="button" type="submit">Salvar</button>
-    </div>
-  </form>
+    <router-link to="/projetos/novo">
+      <span class="icon is-small">
+        <i class="fas fa-plus"></i>
+      </span>
+      Novo projeto
+    </router-link>
   <table class="table is-fullwidth">
     <thead class="thead">
       <tr class="tr has-background-light">
@@ -47,19 +34,28 @@ export default defineComponent({
         <th class="th is-narrow"> 
           Nome
         </th>
+        <th class="th is-narrow"> 
+          Ações
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="projeto in projetos" :key="projeto.id">
         <td>{{ projeto.id }}</td>
         <td>{{ projeto.nome }}</td>
+        <td>
+          <router-link :to="`/projetos/${projeto.id}`" class="button">
+            <span class="icon is-small">
+              <i class="fas fa-pencil-alt"></i>
+            </span>
+          </router-link>
+        </td>
       </tr>
     </tbody>
   </table>
     
   </div>
   </section>
-  
 </template>
 
 <style scoped>
