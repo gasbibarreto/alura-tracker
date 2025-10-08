@@ -1,4 +1,3 @@
-
 <template>
       <div class="column is-three-quarter">
         <Formulario @aoSalvarTarefa="salvarTarefa"/>
@@ -12,11 +11,12 @@
   </template>
   
   <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { computed, defineComponent } from 'vue';
   import Formulario from '../components/Formulario.vue'
   import Tarefa from '../components/Tarefa.vue'
   import Box from '../components/Box.vue'
   import ITarefa from '../interfaces/ITarefa'
+import { useStore } from '@/store';
   
   export default defineComponent({
     name: 'App',
@@ -27,7 +27,6 @@
     },
     data () {
       return {
-        tarefas: [] as ITarefa[],
         modoEscuroAtivo: false
       }
     },
@@ -38,10 +37,21 @@
     },
     methods: {
       salvarTarefa (tarefa: ITarefa) {
-        this.tarefas.push(tarefa)
+        this.store.commit('ADICIONA_TAREFA', {
+          duracaoEmSegundos: tarefa.duracaoEmSegundos,
+          descricaoDaTarefa: tarefa.descricao,
+          projeto: tarefa.projeto
+        })
       },
       trocarTema (modoEscuroAtivo: boolean) {
         this.modoEscuroAtivo = modoEscuroAtivo
+      }
+    },
+    setup() { 
+      const store = useStore()
+      return {
+        tarefas: computed(() => store.state.tarefas),
+        store
       }
     }
   });
@@ -51,6 +61,4 @@
   .lista {
     padding: 1.25rem;
   }
-  
   </style>
-  

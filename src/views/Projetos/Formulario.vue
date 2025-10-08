@@ -30,6 +30,11 @@ export default defineComponent({
         this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
       }
       this.nomeDoProjeto = ""
+      this.store.commit('NOTIFICAR', {
+        titulo: 'Sucesso',
+        texto: 'Projeto salvo com sucesso',
+        tipo: 'SUCESSO'
+      } )
       this.$router.push('/projetos')
     }
   },
